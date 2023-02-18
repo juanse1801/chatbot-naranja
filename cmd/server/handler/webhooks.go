@@ -53,7 +53,7 @@ func (w *WebHooks) PostReceiveMessage() gin.HandlerFunc {
 			return
 		}
 
-		fmt.Println(newMessage)
+		fmt.Println(newMessage.Entry[0].Changes[0].Value.Messages[0].Text.Body)
 
 		ctx.JSON(200, "")
 
