@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/go-co-op/gocron"
 	"github.com/juanse1801/chatbot-naranja/cmd/server/handler"
 	"github.com/juanse1801/chatbot-naranja/internal/webhooks"
 
@@ -12,13 +13,15 @@ type Router interface {
 }
 
 type router struct {
-	r  *gin.Engine
-	rg *gin.RouterGroup
+	r   *gin.Engine
+	rg  *gin.RouterGroup
+	sch *gocron.Scheduler
 }
 
-func NewRouter(r *gin.Engine) Router {
+func NewRouter(r *gin.Engine, sch *gocron.Scheduler) Router {
 	return &router{
-		r: r,
+		r:   r,
+		sch: sch,
 	}
 }
 
