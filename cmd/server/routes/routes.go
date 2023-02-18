@@ -4,6 +4,7 @@ import (
 	"github.com/go-co-op/gocron"
 	"github.com/juanse1801/chatbot-naranja/cmd/server/handler"
 	"github.com/juanse1801/chatbot-naranja/internal/webhooks"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,12 +17,14 @@ type router struct {
 	r   *gin.Engine
 	rg  *gin.RouterGroup
 	sch *gocron.Scheduler
+	db  *mongo.Client
 }
 
-func NewRouter(r *gin.Engine, sch *gocron.Scheduler) Router {
+func NewRouter(r *gin.Engine, sch *gocron.Scheduler, db *mongo.Client) Router {
 	return &router{
 		r:   r,
 		sch: sch,
+		db:  db,
 	}
 }
 
