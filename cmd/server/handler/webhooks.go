@@ -40,7 +40,7 @@ func (w *WebHooks) GetValidate() gin.HandlerFunc {
 			return
 		}
 
-		web.Success(ctx, 200, challengue)
+		ctx.JSON(200, challengue)
 	}
 }
 
@@ -55,7 +55,7 @@ func (w *WebHooks) PostReceiveMessage() gin.HandlerFunc {
 
 		fmt.Println(newMessage)
 
-		web.Success(ctx, 200, "")
+		ctx.JSON(200, "")
 
 	}
 }
