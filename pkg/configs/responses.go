@@ -1,108 +1,19 @@
 package configs
 
-var Bienvenida string = `
-**Hola, bienvenido a Netafim Colombia TM
-	Somos expertos en soluciones
-	inteligentes de irrigación
+var Bienvenida string = `**Hola, bienvenido a Netafim Colombia TM\nSomos expertos en soluciones\ninteligentes de irrigación\n\n**Al utilizar este medio aceptas los términos\ny condiciones de WhatsApp y te responsabilizas\nde la información que sea compartida a través\ndel mismo, bajo las características de seguridad\nde la aplicación. Si quieres ampliar información\ningresa aquí: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n**Te invitamos a conocer nuestra página\nweb: https://www.netafim.co/\n\n**Recuerda nuestras lineas oficiales y verificadas\nen WhatsApp son: Netafim Colombia TM: (+57) xxx xxxxxxx.\nSi te escriben de una diferente en nombre de Netafim Colombia TM,\ndesconfía, y valida directamente en alguno de nuestros canales oficiales.const\n\n**Para avanzar en este chat solo debes digitar\nel número de la opción que necesitas en cada\nuna de las interaciones que vas a tener.\n\nPara continuar elige:\n1. Acepto\n2. No acepto`
 
-**Al utilizar este medio aceptas los términos
-y condiciones de WhatsApp y te responsabilizas
-de la información que sea compartida a través
-del mismo, bajo las características de seguridad
-de la aplicación. Si quieres ampliar información
-ingresa aquí: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+var AceptoTerminos string = `**¿Qué tipo de entidad u organización eres?\n0. Inversor agrícola\n1. Distribuidor\n2. Gobierno\n3. Productor\n4. Investigador\n5. Nuevo cliente interesado\n   en nuestros servicios\n6. Otro`
 
-**Te invitamos a conocer nuestra página
-web: https://www.netafim.co/
+var NoAceptoTerminos string = `**Agradecemos tu honestidad y esperamos\npoder atenderte a través de nuestros canales\nde comunicación vía llamada telefónica al\nnúmero: (+57) 322 8400898\n		(+57) 6644205\no puedes enviar tu solicitud a nuestro correo:\n	co.info@netafim.com`
 
-**Recuerda nuestras lineas oficiales y verificadas
-en WhatsApp son: Netafim Colombia TM: (+57) xxx xxxxxxx.
-Si te escriben de una diferente en nombre de Netafim Colombia TM,
-desconfía, y valida directamente en alguno de nuestros canales oficiales.const
+var SeleccionDeServicio string = `**Selecciona el servicio que necesitas\n	1. Asesoría comercial\n	2. Soporte o garantía\n		post venta`
 
-**Para avanzar en este chat solo debes digitar
-el número de la opción que necesitas en cada
-una de las interaciones que vas a tener.
+var AsesoriaComercial string = `**¿Qué tipo de sistema de\nriego o producto requieres?\n	0. Proyecto de riego\n	1. Servicio de riego\n	2. Perforación o bombas\n	3. Producto específico\n	4. Otro`
 
-Para continuar elige:
-	1. Acepto
-	2. No acepto
-`
-var AceptoTerminos string = `
-**¿Qué tipo de entidad u organización eres?
-		0. Inversor agrícola
-		1. Distribuidor
-		2. Gobierno
-		3. Productor
-		4. Investigador
-		5. Nuevo cliente interesado
-		   en nuestros servicios
-		6. Otro
-`
+var PostAsesoriaComercial string = `**Por favor diligencia los siguientes datos en un\nsolo mensaje y en contados minutos uno de nuestros\nrepresentantes comerciales especializados en\nproyectos o servicios te atenderá.\n\n	- Nombre / Contacto\n	-  Empresa\n	- Correo electrónico\n	- Municipio\n	- Departamento\n	- Tipo de cultivo\n	- Número de hectáreas`
 
-var NoAceptoTerminos string = `
-**Agradecemos tu honestidad y esperamos
-poder atenderte a través de nuestros canales
-de comunicación vía llamada telefónica al
-número: (+57) 322 8400898
-		(+57) 6644205
-o puedes enviar tu solicitud a nuestro correo:
-	co.info@netafim.com
-`
+var OpcionIncorrecta string = `**Has seleccionado una opción inválida,\npor favor digita nuevamente una opción`
 
-var SeleccionDeServicio string = `
-**Selecciona el servicio que necesitas
-	1. Asesoría comercial
-	2. Soporte o garantía
-		post venta
-`
+var SoportePostVenta string = `**Por favor diligencia los siguientes datos en un\nsolo mensaje y en contados minutos uno de nuestros\nrepresentantes de servicio al cliente lo atenderá.\n\n	- Nombre / Contacto\n	-  Empresa\n	- Correo electrónico\n	- Municipio\n	- Departamento\n	- Producto sobre el cual\n	  desea realizar la consulta\n	  o garantía post venta`
 
-var AsesoriaComercial string = `
-**¿Qué tipo de sistema de
-riego o producto requieres?
-	0. Proyecto de riego
-	1. Servicio de riego
-	2. Perforación o bombas
-	3. Producto específico
-	4. Otro
-`
-
-var PostAsesoriaComercial string = `
-**Por favor diligencia los siguientes datos en un
-solo mensaje y en contados minutos uno de nuestros
-representantes comerciales especializados en
-proyectos o servicios te atenderá.
-
-	- Nombre / Contacto
-	-  Empresa
-	- Correo electrónico
-	- Municipio
-	- Departamento
-	- Tipo de cultivo
-	- Número de hectáreas
-`
-
-var OpcionIncorrecta string = `
-**Has seleccionado una opción inválida,
-por favor digita nuevamente una opción
-`
-
-var SoportePostVenta string = `
-**Por favor diligencia los siguientes datos en un
-solo mensaje y en contados minutos uno de nuestros
-representantes de servicio al cliente lo atenderá.
-
-	- Nombre / Contacto
-	-  Empresa
-	- Correo electrónico
-	- Municipio
-	- Departamento
-	- Producto sobre el cual
-	  desea realizar la consulta
-	  o garantía post venta
-`
-var FinInteracción string = `
-**Gracias por elegirnos, pronto un
-asesor especializado se pondrá en 
-contacto para brindar el soporte.
-`
+var FinInteracción string = `**Gracias por elegirnos, pronto un\nasesor especializado se pondrá en \ncontacto para brindar el soporte.`

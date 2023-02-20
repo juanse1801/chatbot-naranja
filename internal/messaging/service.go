@@ -2,10 +2,19 @@ package messaging
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 )
+
+type messageError struct {
+	Error error `json:"error"`
+}
+
+type error struct {
+	Message string `json:"message"`
+}
 
 type Service interface {
 	SendMessage(to string, text string)
@@ -45,8 +54,19 @@ func (s *service) SendMessage(to string, text string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer response.Body.Close()
+
+	msgerror := &messageError{}
+
+	derr := json.NewDecoder(response.Body).Decode(msgerror)
+	if derr != nil {
+		log.Fatal(derr)
+	}
 
 	if response.StatusCode == 200 {
 		fmt.Println("Mensaje enviado")
+	} else {
+		log.Println(response.StatusCode)
+		log.Println(msgerror.Error.Message)
 	}
 }

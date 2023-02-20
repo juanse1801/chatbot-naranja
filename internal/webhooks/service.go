@@ -52,7 +52,6 @@ func (s *service) PostReceiveMessage(ctx context.Context, data domain.NewMessage
 	interaction, err := s.itcService.GetInteraction(ctx, clientNumber)
 	if err != nil {
 		if err.Error() == "Not found" {
-			fmt.Println("First interaction")
 			itc, err := s.itcService.CreateInteraction(ctx, clientNumber)
 			if err != nil {
 				fmt.Println(err.Error())
@@ -70,9 +69,7 @@ func (s *service) PostReceiveMessage(ctx context.Context, data domain.NewMessage
 
 	// Reviso cual es el siguiente estado y el response del estado actual
 	newState, response, execute := s.stateService.NextState(interaction.State, message)
-	fmt.Println(newState)
 	interaction.State = newState
-	fmt.Println(interaction.State)
 	s.executor(ctx, execute, interaction, data)
 
 	// Service de mensajería
