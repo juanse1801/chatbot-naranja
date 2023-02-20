@@ -3,52 +3,85 @@ package configs
 var StateConfig = map[string]map[string]map[string]string{
 	"Bienvenida": {
 		"default": {
-			"response": "Hola como estas?, digite 1 o 2",
-		},
-		"next_state": {
-			"value": "Segundo estado",
-		},
-		"execute": {
-			"value": "update_state",
+			"response":   Bienvenida,
+			"next_state": "Terms",
+			"execute":    "update_state",
 		},
 	},
-	"Segundo estado": {
+	"Terms": {
 		"1": {
-			"response": "Respuesta opcion 1 segundo estado, escriba su correo",
+			"response":   AceptoTerminos,
+			"next_state": "EntitySelection",
+			"execute":    "update_state",
 		},
 		"2": {
-			"response": "Respuesta opcion 2 segundo estado, escriba su correo",
+			"response":   NoAceptoTerminos,
+			"next_state": "",
+			"execute":    "delete_interaction",
 		},
 		"not_valid": {
-			"response": "Repuesta no valida segundo estado porfavor digite 1 o 2",
-		},
-		"next_state": {
-			"value": "Tercer estado",
-		},
-		"execute": {
-			"value": "save_mail",
+			"response": OpcionIncorrecta,
+			"execute":  "update_state",
 		},
 	},
-	"Tercer estado": {
-		"default": {
-			"response": "porfavor digite la informacion",
+	"EntitySelection": {
+		"1": {
+			"response":   SeleccionDeServicio,
+			"next_state": "ServiceSelection",
+			"execute":    "update_state",
 		},
-		"next_state": {
-			"value": "Cuarto estado",
+		"2": {
+			"response":   SeleccionDeServicio,
+			"next_state": "ServiceSelection",
+			"execute":    "update_state",
 		},
-		"execute": {
-			"value": "send_mail",
+		"3": {
+			"response":   SeleccionDeServicio,
+			"next_state": "ServiceSelection",
+			"execute":    "update_state",
+		},
+		"4": {
+			"response":   SeleccionDeServicio,
+			"next_state": "ServiceSelection",
+			"execute":    "update_state",
+		},
+		"5": {
+			"response":   SeleccionDeServicio,
+			"next_state": "ServiceSelection",
+			"execute":    "update_state",
+		},
+		"6": {
+			"response":   SeleccionDeServicio,
+			"next_state": "ServiceSelection",
+			"execute":    "update_state",
+		},
+		"not_valid": {
+			"response": OpcionIncorrecta,
+			"execute":  "update_state",
 		},
 	},
-	"Cuarto estado": {
+	"ServiceSelection": {
+		"1": {
+			"response":   AsesoriaComercial,
+			"next_state": "EndInteraction",
+			"execute":    "update_state",
+		},
+		"2": {
+			"response":   PostAsesoriaComercial,
+			"next_state": "EndInteraction",
+			"execute":    "update_state",
+		},
+		"not_valid": {
+			"response": OpcionIncorrecta,
+			"execute":  "update_state",
+		},
+	},
+
+	"EndInteraction": {
 		"default": {
-			"response": "gracias por enviar su informacion pronto nos comunicaremos",
-		},
-		"execute": {
-			"value": "delete_interaction",
-		},
-		"next_state": {
-			"value": "Quinto estado",
+			"response":   FinInteracción,
+			"next_state": "",
+			"execute":    "delete_interaction",
 		},
 	},
 }

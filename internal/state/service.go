@@ -16,20 +16,20 @@ func NewService() Service {
 func (s *service) NextState(actualState string, option string) (string, string, string) {
 
 	if isDefault(actualState) {
-		return configs.StateConfig[actualState]["next_state"]["value"],
+		return configs.StateConfig[actualState]["default"]["next_state"],
 			configs.StateConfig[actualState]["default"]["response"],
-			configs.StateConfig[actualState]["execute"]["value"]
+			configs.StateConfig[actualState]["default"]["execute"]
 
 	}
 
 	if isValidEntry(actualState, option) {
-		return configs.StateConfig[actualState]["next_state"]["value"],
+		return configs.StateConfig[actualState][option]["next_state"],
 			configs.StateConfig[actualState][option]["response"],
-			configs.StateConfig[actualState]["execute"]["value"]
+			configs.StateConfig[actualState][option]["execute"]
 	} else {
 		return actualState,
 			configs.StateConfig[actualState]["not_valid"]["response"],
-			configs.StateConfig[actualState]["execute"]["value"]
+			configs.StateConfig[actualState]["not_valid"]["execute"]
 	}
 }
 
