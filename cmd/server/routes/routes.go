@@ -3,6 +3,10 @@ package routes
 import (
 	"github.com/go-co-op/gocron"
 	"github.com/juanse1801/chatbot-naranja/cmd/server/handler"
+	"github.com/juanse1801/chatbot-naranja/internal/interaction"
+	"github.com/juanse1801/chatbot-naranja/internal/messaging"
+	"github.com/juanse1801/chatbot-naranja/internal/scheduler"
+	"github.com/juanse1801/chatbot-naranja/internal/state"
 	"github.com/juanse1801/chatbot-naranja/internal/webhooks"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -38,7 +42,12 @@ func (r *router) MapRoutes() {
 }
 
 func (r *router) buildWebHookRoutes() {
-	service := webhooks.NewService()
+	itcRepository := interaction.NewRepository(r.db)
+	mssgService := messaging.NewService()
+	schService := scheduler.NewService(r.sch)
+	stateService := state.NewService()
+	itcService := interaction.NewService(itcRepository)
+	service := webhooks.NewService(itcService, schService, stateService, mssgService)
 	handler := handler.NewWebHook(service)
 	r.rg.GET("/webhooks", handler.GetValidate())
 	r.rg.POST("/webhooks", handler.PostReceiveMessage())
