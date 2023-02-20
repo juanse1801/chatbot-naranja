@@ -39,6 +39,8 @@ func (s *service) SendMessage(to string, text string) {
 		}
 	}`, to, text)
 
+	fmt.Println(message)
+
 	body := []byte(message)
 
 	r, err := http.NewRequest("POST", posturl, bytes.NewBuffer(body))

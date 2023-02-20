@@ -62,7 +62,7 @@ var StateConfig = map[string]map[string]map[string]string{
 	},
 	"ServiceSelection": {
 		"1": {
-			"response":   AsesoriaComercial,
+			"response":   PostAsesoriaComercial,
 			"next_state": "EndInteraction",
 			"execute":    "update_state",
 		},
