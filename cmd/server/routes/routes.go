@@ -44,9 +44,9 @@ func (r *router) MapRoutes() {
 func (r *router) buildWebHookRoutes() {
 	itcRepository := interaction.NewRepository(r.db)
 	mssgService := messaging.NewService()
-	schService := scheduler.NewService(r.sch)
 	stateService := state.NewService()
 	itcService := interaction.NewService(itcRepository)
+	schService := scheduler.NewService(r.sch, mssgService, itcService)
 	service := webhooks.NewService(itcService, schService, stateService, mssgService)
 	handler := handler.NewWebHook(service)
 	r.rg.GET("/webhooks", handler.GetValidate())

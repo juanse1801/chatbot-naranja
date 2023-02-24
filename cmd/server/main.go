@@ -15,7 +15,7 @@ import (
 func main() {
 
 	// Set and start Cron Scheduler
-	cron := gocron.NewScheduler(time.UTC)
+	cron := gocron.NewScheduler(time.Local)
 	cron.StartAsync()
 
 	// Load .env file

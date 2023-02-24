@@ -11,6 +11,7 @@ import (
 	"github.com/juanse1801/chatbot-naranja/internal/messaging"
 	schedulerService "github.com/juanse1801/chatbot-naranja/internal/scheduler"
 	stateService "github.com/juanse1801/chatbot-naranja/internal/state"
+	"github.com/juanse1801/chatbot-naranja/pkg/jobs"
 	"github.com/juanse1801/chatbot-naranja/pkg/models"
 )
 
@@ -81,24 +82,28 @@ func (s *service) executor(ctx context.Context, execute string, itc models.Inter
 	switch execute {
 	case "update_state":
 		{
+			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
 			s.itcService.UpdateInteraction(ctx, itc)
 			return
 		}
 	case "save_mail":
 		{
+
 			itc.ClientMail = data.Entry[0].Changes[0].Value.Messages[0].Text.Body
+			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
 			s.itcService.UpdateInteraction(ctx, itc)
 			return
 		}
 	case "send_mail":
 		{
+			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
 			s.itcService.UpdateInteraction(ctx, itc)
 			// mailing service
 			return
 		}
 	case "delete_interaction":
 		{
-			// delete service
+			s.schService.DeleteExpiration(itc.ClientNumber)
 			s.itcService.DeleteInteraction(ctx, itc.ClientNumber)
 			return
 		}

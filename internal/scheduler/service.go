@@ -1,46 +1,67 @@
 package scheduler
 
 import (
+	"context"
+
 	"github.com/go-co-op/gocron"
-	"github.com/juanse1801/chatbot-naranja/pkg/jobs"
+	"github.com/juanse1801/chatbot-naranja/internal/interaction"
+	"github.com/juanse1801/chatbot-naranja/internal/messaging"
 )
 
 type Service interface {
-	ScheduleExpiration(tag string, time string) error
-	UpdateExpiration(tag string, time string) error
+	ScheduleExpiration(ctx context.Context, tag string, firstTime string, secondTime string) error
 	DeleteExpiration(tag string) error
 }
 
 type service struct {
-	scheduler *gocron.Scheduler
+	scheduler  *gocron.Scheduler
+	msgService messaging.Service
+	itcService interaction.Service
 }
 
-func NewService(sch *gocron.Scheduler) Service {
+func NewService(sch *gocron.Scheduler, msg messaging.Service, itc interaction.Service) Service {
 	return &service{
-		scheduler: sch,
+		scheduler:  sch,
+		msgService: msg,
+		itcService: itc,
 	}
 }
 
-func (sch *service) ScheduleExpiration(tag string, time string) error {
-	job, _ := sch.scheduler.Cron(time).Do(func() {
-		jobs.RecontactJob()
-	})
-	job.Tag(tag)
-	return nil
-}
+func (sch *service) ScheduleExpiration(ctx context.Context, tag string, firstTime string, secondTime string) error {
+	_, err := sch.scheduler.FindJobsByTag(tag)
+	if err != nil {
+		rcJob, _ := sch.scheduler.Cron(firstTime).Do(func() {
+			sch.msgService.SendRecontactMessage(tag)
+		})
+		gbJob, _ := sch.scheduler.Cron(secondTime).Do(func() {
+			sch.msgService.SendNoContactMessage(tag)
+			sch.itcService.DeleteInteraction(ctx, tag)
+		})
 
-func (sch *service) UpdateExpiration(tag string, time string) error {
-	err := sch.scheduler.RemoveByTag(tag)
+		rcJob.Tag(tag)
+		gbJob.Tag(tag)
+		return nil
+	}
+
+	err = sch.scheduler.RemoveByTag(tag)
 
 	if err != nil {
 		return err
 	}
 
-	job, _ := sch.scheduler.Cron(time).Do(func() {
-		jobs.RecontactJob()
+	rcJob, _ := sch.scheduler.Cron(firstTime).Do(func() {
+		sch.msgService.SendRecontactMessage(tag)
 	})
-	job.Tag(tag)
+	gbJob, _ := sch.scheduler.Cron(secondTime).Do(func() {
+		sch.msgService.SendNoContactMessage(tag)
+		sch.itcService.DeleteInteraction(ctx, tag)
+	})
+
+	rcJob.Tag(tag)
+	gbJob.Tag(tag)
+
 	return nil
+
 }
 
 func (sch *service) DeleteExpiration(tag string) error {
