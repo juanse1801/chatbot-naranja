@@ -41,8 +41,6 @@ func (s *service) SendMessage(to string, text string) {
 		}
 	}`, to, text)
 
-	fmt.Println(message)
-
 	body := []byte(message)
 
 	r, err := http.NewRequest("POST", posturl, bytes.NewBuffer(body))
@@ -51,7 +49,7 @@ func (s *service) SendMessage(to string, text string) {
 	}
 
 	r.Header.Add("Content-Type", "application/json")
-	r.Header.Add("Authorization", "Bearer EAAKrLKufN4oBAKlNPh1636CzoJUq5JnhMYH6z9BJl6R60a0JUnvlOEYSjIl4Qs7wwFGgPY7UWqY35na5eZAwoU0EZCIXcSUjquflBDJWznKaCqSyKmZCCDn9nH7ZADZAFWNGE9TpWLaliYCX7Q5JBaNnCntkKRDLxNQ9eYJTJxKVddgEr6teaBU2psrdUeYzplynggQ1gVszzIZCxX1ZAbo")
+	r.Header.Add("Authorization", "Bearer EAAKrLKufN4oBAPUr9Pq8W7F6GSuirm4LlCUNrrVkZBgRFxRZBYwj1kSK9sZBipPErwUgPYpnb23ZBmZBa7py9HhZAZCXs7UvEZCYeTTO7mYZBoPleLhlz2aX7wUB2wxkGjMqnvyJOXtBjdvIZC6fchkMYjENAgjZAj6SiyZCOooqSKc4xXJYEZBT4QAxKvjvsIwZC9m9je8S7C9b8zxkYzayZCLcbdV")
 
 	client := &http.Client{}
 	response, err := client.Do(r)
@@ -87,8 +85,6 @@ func (s *service) SendRecontactMessage(to string) {
 		}
 	}`, to)
 
-	fmt.Println(message)
-
 	body := []byte(message)
 
 	r, err := http.NewRequest("POST", posturl, bytes.NewBuffer(body))
@@ -97,7 +93,7 @@ func (s *service) SendRecontactMessage(to string) {
 	}
 
 	r.Header.Add("Content-Type", "application/json")
-	r.Header.Add("Authorization", "Bearer EAAKrLKufN4oBAKlNPh1636CzoJUq5JnhMYH6z9BJl6R60a0JUnvlOEYSjIl4Qs7wwFGgPY7UWqY35na5eZAwoU0EZCIXcSUjquflBDJWznKaCqSyKmZCCDn9nH7ZADZAFWNGE9TpWLaliYCX7Q5JBaNnCntkKRDLxNQ9eYJTJxKVddgEr6teaBU2psrdUeYzplynggQ1gVszzIZCxX1ZAbo")
+	r.Header.Add("Authorization", "Bearer EAAKrLKufN4oBAPUr9Pq8W7F6GSuirm4LlCUNrrVkZBgRFxRZBYwj1kSK9sZBipPErwUgPYpnb23ZBmZBa7py9HhZAZCXs7UvEZCYeTTO7mYZBoPleLhlz2aX7wUB2wxkGjMqnvyJOXtBjdvIZC6fchkMYjENAgjZAj6SiyZCOooqSKc4xXJYEZBT4QAxKvjvsIwZC9m9je8S7C9b8zxkYzayZCLcbdV")
 
 	client := &http.Client{}
 	response, err := client.Do(r)
@@ -133,8 +129,6 @@ func (s *service) SendNoContactMessage(to string) {
 		}
 	}`, to)
 
-	fmt.Println(message)
-
 	body := []byte(message)
 
 	r, err := http.NewRequest("POST", posturl, bytes.NewBuffer(body))
@@ -143,7 +137,7 @@ func (s *service) SendNoContactMessage(to string) {
 	}
 
 	r.Header.Add("Content-Type", "application/json")
-	r.Header.Add("Authorization", "Bearer EAAKrLKufN4oBAKlNPh1636CzoJUq5JnhMYH6z9BJl6R60a0JUnvlOEYSjIl4Qs7wwFGgPY7UWqY35na5eZAwoU0EZCIXcSUjquflBDJWznKaCqSyKmZCCDn9nH7ZADZAFWNGE9TpWLaliYCX7Q5JBaNnCntkKRDLxNQ9eYJTJxKVddgEr6teaBU2psrdUeYzplynggQ1gVszzIZCxX1ZAbo")
+	r.Header.Add("Authorization", "Bearer EAAKrLKufN4oBAPUr9Pq8W7F6GSuirm4LlCUNrrVkZBgRFxRZBYwj1kSK9sZBipPErwUgPYpnb23ZBmZBa7py9HhZAZCXs7UvEZCYeTTO7mYZBoPleLhlz2aX7wUB2wxkGjMqnvyJOXtBjdvIZC6fchkMYjENAgjZAj6SiyZCOooqSKc4xXJYEZBT4QAxKvjvsIwZC9m9je8S7C9b8zxkYzayZCLcbdV")
 
 	client := &http.Client{}
 	response, err := client.Do(r)

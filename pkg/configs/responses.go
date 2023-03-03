@@ -6,14 +6,16 @@ var AceptoTerminos string = `**¿Qué tipo de entidad u organización eres?\n0. 
 
 var NoAceptoTerminos string = `**Agradecemos tu honestidad y esperamos\npoder atenderte a través de nuestros canales\nde comunicación vía llamada telefónica al\nnúmero: (+57) 322 8400898\n\n(+57) 6644205\no puedes enviar tu solicitud a nuestro correo:\nco.info@netafim.com`
 
-var SeleccionDeServicio string = `**Selecciona el servicio que necesitas\n 1. Asesoría comercial\n 2. Soporte o garantía\n post venta`
+var SeleccionDeServicio string = `**Selecciona el servicio que necesitas\n 0. Asesoría comercial\n 1. Administración`
 
 var AsesoriaComercial string = `**¿Qué tipo de sistema de\nriego o producto requieres?\n 0. Proyecto de riego\n 1. Servicio de riego\n 2. Perforación o bombas\n  3. Producto específico\n 4. Otro`
 
 var PostAsesoriaComercial string = `**Por favor diligencia los siguientes datos en un\nsolo mensaje y en contados minutos uno de nuestros\nrepresentantes comerciales especializados en\nproyectos o servicios te atenderá.\n\n- Nombre\n- Contacto\n- Empresa\n- Correo electrónico\n- Municipio\n- Departamento\n- Tipo de cultivo\n- Número de hectáreas`
 
+var PostAsesoriaAdministrativa string = `**Por favor diligencia los siguientes datos en un\nsolo mensaje y en contados minutos uno de nuestros\nrepresentantes comerciales especializados en\nproyectos o servicios te atenderá.\n\n- Nombre\n- Contacto\n- Empresa\n- Correo electrónico\n- Municipio\n- Departamento\n- Tipo de cultivo\n- Número de hectáreas\n - Producto en el cual estas interesado`
+
 var OpcionIncorrecta string = `**Has seleccionado una opción inválida,\npor favor digita nuevamente una opción`
 
-var SoportePostVenta string = `**Por favor diligencia los siguientes datos en un\nsolo mensaje y en contados minutos uno de nuestros\nrepresentantes de servicio al cliente lo atenderá.\n\n- Nombre\n- Contacto\n- Empresa\n- Correo electrónico\n- Municipio\n- Departamento\n- Producto sobre el cual\n desea realizar la consulta\n o garantía post venta`
-
 var FinInteracción string = `**Gracias por elegirnos, pronto un\nasesor especializado se pondrá en \ncontacto para brindar el soporte.`
+
+var ZoneSelection string = `**¿En que zona del país se encuentra ubicado?\n 0. Norte \n 1. Sur \n. 2. Centro`

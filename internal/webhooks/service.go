@@ -7,7 +7,9 @@ import (
 	"os"
 
 	"github.com/juanse1801/chatbot-naranja/internal/domain"
+	"github.com/juanse1801/chatbot-naranja/internal/history"
 	interactionService "github.com/juanse1801/chatbot-naranja/internal/interaction"
+	"github.com/juanse1801/chatbot-naranja/internal/mailing"
 	"github.com/juanse1801/chatbot-naranja/internal/messaging"
 	schedulerService "github.com/juanse1801/chatbot-naranja/internal/scheduler"
 	stateService "github.com/juanse1801/chatbot-naranja/internal/state"
@@ -21,18 +23,22 @@ type Service interface {
 }
 
 type service struct {
-	itcService   interactionService.Service
-	schService   schedulerService.Service
-	stateService stateService.Service
-	mssgService  messaging.Service
+	itcService     interactionService.Service
+	schService     schedulerService.Service
+	stateService   stateService.Service
+	mssgService    messaging.Service
+	mailService    mailing.Service
+	historyService history.Service
 }
 
-func NewService(itc interactionService.Service, sch schedulerService.Service, ste stateService.Service, mssg messaging.Service) Service {
+func NewService(itc interactionService.Service, sch schedulerService.Service, ste stateService.Service, mssg messaging.Service, mail mailing.Service, hs history.Service) Service {
 	return &service{
-		itcService:   itc,
-		schService:   sch,
-		stateService: ste,
-		mssgService:  mssg,
+		itcService:     itc,
+		schService:     sch,
+		stateService:   ste,
+		mssgService:    mssg,
+		mailService:    mail,
+		historyService: hs,
 	}
 }
 
@@ -59,7 +65,7 @@ func (s *service) PostReceiveMessage(ctx context.Context, data domain.NewMessage
 			}
 			newState, response, execute := s.stateService.NextState("Bienvenida", "")
 			itc.State = newState
-			s.executor(ctx, execute, itc, data)
+			s.executor(ctx, execute, itc, message)
 			s.mssgService.SendMessage(clientNumber, response)
 			return
 		} else {
@@ -71,38 +77,69 @@ func (s *service) PostReceiveMessage(ctx context.Context, data domain.NewMessage
 	// Reviso cual es el siguiente estado y el response del estado actual
 	newState, response, execute := s.stateService.NextState(interaction.State, message)
 	interaction.State = newState
-	s.executor(ctx, execute, interaction, data)
+	s.executor(ctx, execute, interaction, message)
 
 	// Service de mensajería
 	s.mssgService.SendMessage(clientNumber, response)
 	return
 }
 
-func (s *service) executor(ctx context.Context, execute string, itc models.InteractionModel, data domain.NewMessageReceived) {
+func (s *service) executor(ctx context.Context, execute string, itc models.InteractionModel, data string) {
 	switch execute {
 	case "update_state":
 		{
+
 			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
 			s.itcService.UpdateInteraction(ctx, itc)
 			return
 		}
-	case "save_mail":
+	case "update_entity":
 		{
 
-			itc.ClientMail = data.Entry[0].Changes[0].Value.Messages[0].Text.Body
+			itc.Entity = data
 			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
 			s.itcService.UpdateInteraction(ctx, itc)
 			return
 		}
-	case "send_mail":
+	case "update_service":
 		{
+
+			itc.Service = data
 			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
 			s.itcService.UpdateInteraction(ctx, itc)
-			// mailing service
+			return
+		}
+	case "update_type":
+		{
+
+			itc.Type = data
+			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
+			s.itcService.UpdateInteraction(ctx, itc)
+			return
+		}
+	case "update_zone":
+		{
+
+			itc.Zone = data
+			s.schService.ScheduleExpiration(ctx, itc.ClientNumber, jobs.GetNextTime(), jobs.GetSecondTime())
+			s.itcService.UpdateInteraction(ctx, itc)
 			return
 		}
 	case "delete_interaction":
 		{
+			s.schService.DeleteExpiration(itc.ClientNumber)
+			s.itcService.DeleteInteraction(ctx, itc.ClientNumber)
+			return
+		}
+	case "end_interaction":
+		{
+			if itc.Service == "0" {
+				s.mailService.SendEmail("0", itc.Zone, data)
+			}
+			if itc.Service == "1" {
+				s.mailService.SendEmail("1", "default", data)
+			}
+			s.historyService.CreateHistory(ctx, itc, data)
 			s.schService.DeleteExpiration(itc.ClientNumber)
 			s.itcService.DeleteInteraction(ctx, itc.ClientNumber)
 			return

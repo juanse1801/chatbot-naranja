@@ -54,7 +54,6 @@ func (r *repository) Save(ctx context.Context, clientNumber string) (models.Inte
 	newInteraction := models.InteractionModel{
 		State:        "Bienvenida",
 		ClientNumber: clientNumber,
-		ClientMail:   "",
 	}
 
 	collection := configs.GetCollection(r.db, "interactions")

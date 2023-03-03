@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/juanse1801/chatbot-naranja/internal/domain"
@@ -30,8 +29,6 @@ func (w *WebHooks) GetValidate() gin.HandlerFunc {
 			web.Error(ctx, 400, "Error: id format")
 			return
 		}
-
-		fmt.Println(token)
 
 		isValid := w.webhookService.GetValidateEntry(ctx, token)
 
